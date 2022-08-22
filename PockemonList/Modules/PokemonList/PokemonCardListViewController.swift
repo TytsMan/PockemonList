@@ -64,6 +64,7 @@ class PokemonCardListViewController: UIViewController {
         
         title = "Pokémon Cards"
         activityIndicatorView.isHidden = true
+        activityIndicatorView.hidesWhenStopped = true
     }
     
     // MARK: - Logic

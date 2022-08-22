@@ -38,7 +38,9 @@ class PokemonCardListCell: UITableViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        
+        dump(#function)
     }
     
     deinit {
@@ -64,6 +66,7 @@ class PokemonCardListCell: UITableViewCell {
         supertypeLabel.text = model.pokemon.supertype.rawValue
         evolvesFromLabel.text = model.pokemon.evolvesFrom
         hpLabel.text = model.pokemon.hp
+        favouriteButton.imageView?.image = model.favorite ? UIImage(named: "star") : UIImage(named: "star.fill")
     }
     
     // MARK: - Actions
