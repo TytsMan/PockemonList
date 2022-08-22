@@ -122,7 +122,6 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="9VW-sY-NKO"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="HuW-48-28x"/>
                                 </connections>
                             </tableView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Cks-lV-fUy">

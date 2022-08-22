@@ -9,9 +9,9 @@ import Foundation
 
 protocol PokemonCardProvider {
     
-    func getPokemonCards(with completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void)
-    func getFavouritePokemonCards(with completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void)
-    func setFaouritePokemonCard(model: PokemonCardListModel, with completion: @escaping (Result<PokemonCardListModel, Error>) -> Void)
+    func getPokemonCards(completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void)
+    func getFavouritePokemonCards(completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void)
+    func setFaouritePokemonCard(model: PokemonCardListModel, completion: @escaping (Result<PokemonCardListModel, Error>) -> Void)
 }
 
 class PokemonCardProviderImpl: PokemonCardProvider {
@@ -38,7 +38,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
     // MARK: - PokemonCardProvider
     
     func getPokemonCards(
-        with completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
+        completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
     ) {
         apiManager.getPokemonCards { result in
             let newResult = result.map { cards in
@@ -51,7 +51,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
     }
     
     func getFavouritePokemonCards(
-        with completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
+        completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
     ) {
         apiManager.getPokemonCards { [weak self] result in
             let favourites = self?.getFauritePokemonCardsFlags() ?? [:]
@@ -68,7 +68,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
     
     func setFaouritePokemonCard(
         model: PokemonCardListModel,
-        with completion: @escaping (Result<PokemonCardListModel, Error>) -> Void
+        completion: @escaping (Result<PokemonCardListModel, Error>) -> Void
     ) {
         var newModel = model
         newModel.favorite.toggle()

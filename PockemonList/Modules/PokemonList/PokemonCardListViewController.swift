@@ -7,14 +7,14 @@
 
 import UIKit
 
-enum PokemonListState {
-    case loading
-    case list([PokemonCardListModel])
-    case favourites([PokemonCardListModel])
-    case error(Error)
-}
-
 class PokemonCardListViewController: UIViewController {
+    
+    enum State {
+        case loading
+        case list([PokemonCardListModel] = [])
+        case favourites([PokemonCardListModel] = [])
+        case error(Error)
+    }
     
     // MARK: - IBOutlets
     
@@ -28,8 +28,8 @@ class PokemonCardListViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var state: PokemonListState = .list([]) {
-        didSet {	
+    private var state: State = .list() {
+        didSet {
             handleState(state)
         }
     }
@@ -41,21 +41,7 @@ class PokemonCardListViewController: UIViewController {
         
         setupUIElements()
         
-        state = .loading
-        pokemonCardProvider.getPokemonCards { [weak self] result in
-            switch result {
-            case .failure(let error):
-                self?.state = .error(error)
-            case .success(let cards):
-                self?.state = .list(cards)
-            }
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // do some stuff
+        requestPokemonCardsFor(destinationState: .list())
     }
     
     // MARK: - Setup
@@ -69,8 +55,10 @@ class PokemonCardListViewController: UIViewController {
     
     // MARK: - Logic
     
-    private func handleState(_ state: PokemonListState) -> Void {
-//        dump(state)
+    private func handleState(
+        _ state: State
+    ) -> Void {
+        //        dump(state)
         switch state {
         case .loading:
             activityIndicatorView.isHidden = false
@@ -93,90 +81,96 @@ class PokemonCardListViewController: UIViewController {
         tableView.reloadData()
     }
     
-    // seems i can't use this method since i should to pass destinationState property
-    private func handleNetworkResponce(
-        result: Result<[PokemonCardListModel], Error>,
-        // here i can use wrapper for states(.list, .favourites)
-        for destationState: PokemonListState
+    private func requestPokemonCardsFor(
+        destinationState: State
     ) -> Void {
-        switch result {
-        case .failure(let error):
-            state = .error(error)
-            
-        case .success(let cards):
-            switch destationState {
-            case .list(_):
-                state = .list(cards)
-            case .favourites(_):
-                state = .favourites(cards)
-            case .loading, .error(_):
-                break
+        state = .loading
+        
+        let requestHandler: (Result<[PokemonCardListModel], Error>) -> Void = { [weak self] result in
+            switch result {
+            case .success(let models):
+                switch destinationState {
+                case .list:
+                    self?.state = .list(models)
+                case .favourites:
+                    self?.state = .favourites(models)
+                default:
+                    break
+                }
+            case .failure(let error):
+                self?.state = .error(error)
             }
         }
+        
+        switch destinationState {
+        case .list:
+            pokemonCardProvider
+                .getPokemonCards(completion: requestHandler)
+        case .favourites:
+            pokemonCardProvider
+                .getFavouritePokemonCards(completion: requestHandler)
+        default:
+            break
+        }
+        
     }
     
     // MARK: - Actions
     
-    @IBAction func favouritesButtonTapped(_ sender: Any) {
-        
+    @IBAction private func favouritesButtonTapped(
+        _ sender: Any
+    ) {
         switch state {
         case .list:
             state = .loading
-            pokemonCardProvider.getFavouritePokemonCards { [weak self] result in
-                switch result {
-                case .failure(let error):
-                    self?.state = .error(error)
-                case .success(let cards):
-                    self?.state = .favourites(cards)
-                }
-            }
+            requestPokemonCardsFor(destinationState: .favourites())
         case .favourites:
             state = .loading
-            pokemonCardProvider.getPokemonCards { [weak self] result in
-                switch result {
-                case .failure(let error):
-                    self?.state = .error(error)
-                case .success(let cards):
-                    self?.state = .list(cards)
-                }
-            }
-        case .loading, .error(_):
+            requestPokemonCardsFor(destinationState: .list())
+        default:
             break
         }
     }
     
-    func favouriteButtonTapped(model: PokemonCardListModel) -> Void {
-        pokemonCardProvider.setFaouritePokemonCard(model: model) { [weak self] result in
-            switch result {
-            case .failure(let error):
-                self?.state = .error(error)
-                
-            case .success(let model):
-                
-                func updateModels(
-                    _ models: inout [PokemonCardListModel],
-                    with model: PokemonCardListModel
-                ) -> Void {
+    private func favouriteButtonTapped(
+        model: PokemonCardListModel
+    ) -> Void {
+        pokemonCardProvider
+            .setFaouritePokemonCard(
+                model: model
+            ) { [weak self] result in
+                switch result {
+                case .failure(let error):
+                    self?.state = .error(error)
                     
-                    guard let idx = models.firstIndex(where: { $0.pokemon.id == model.pokemon.id }) else { return }
-                    models[idx] = model
-                }
-                
-                switch self?.state {
-                case .list(var models):
-                    updateModels(&models, with: model)
-                    self?.state = .list(models)
-                case .favourites(var models):
-                    updateModels(&models, with: model)
-                    self?.state = .favourites(models)
-                case .loading, .error(_), .none:
-                    break
+                case .success(let model):
+                    
+                    func updateModels(
+                        _ models: inout [PokemonCardListModel],
+                        with model: PokemonCardListModel
+                    ) -> Void {
+                        
+                        guard let idx = models.firstIndex(where: { $0.pokemon.id == model.pokemon.id }) else { return }
+                        models[idx] = model
+                    }
+                    
+                    switch self?.state {
+                    case .list(var models):
+                        updateModels(&models, with: model)
+                        self?.state = .list(models)
+                    case .favourites(var models):
+                        updateModels(&models, with: model)
+                        self?.state = .favourites(models)
+                    case .loading, .error(_), .none:
+                        break
+                    }
                 }
             }
-        }
     }
     
-    func detailButtonTapped(model: PokemonCardListModel) -> Void {
+    private func detailButtonTapped(
+        model: PokemonCardListModel
+    ) -> Void {
         let detailVC = PokemonDetailViewController()
         detailVC.model = model
         show(detailVC, sender: self)
@@ -188,7 +182,7 @@ class PokemonCardListViewController: UIViewController {
 
 extension PokemonCardListViewController: UITableViewDataSource {
     
-    var dataSource: [PokemonCardListModel]? {
+    private var dataSource: [PokemonCardListModel]? {
         switch state {
         case .favourites(let models), .list(let models):
             return models
@@ -197,11 +191,17 @@ extension PokemonCardListViewController: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         dataSource?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonCardListCell.reuseIdentifier) as? PokemonCardListCell else {
             return UITableViewCell()
         }
@@ -210,17 +210,5 @@ extension PokemonCardListViewController: UITableViewDataSource {
         cell.favouriteActionHandler = favouriteButtonTapped
         cell.detailActionHandler = detailButtonTapped
         return cell
-    }
-}
-
-// MARK: - UITableViewDelegate
-// don't needed since i use closures
-extension PokemonCardListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let model = dataSource![indexPath.row]
-        let detailVC = PokemonDetailViewController()
-        detailVC.model = model
-        show(detailVC, sender: self)
     }
 }
