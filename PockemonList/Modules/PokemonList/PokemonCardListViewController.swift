@@ -122,10 +122,8 @@ class PokemonCardListViewController: UIViewController {
     ) {
         switch state {
         case .list:
-            state = .loading
             requestPokemonCardsFor(destinationState: .favourites())
         case .favourites:
-            state = .loading
             requestPokemonCardsFor(destinationState: .list())
         default:
             break
