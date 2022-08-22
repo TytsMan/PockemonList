@@ -10,6 +10,7 @@
 		870E060328B0043800206817 /* PokemonCardAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060228B0043800206817 /* PokemonCardAPIManager.swift */; };
 		870E060528B0078500206817 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060428B0078500206817 /* UIViewController+Alert.swift */; };
 		870E060928B012B100206817 /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060828B012B100206817 /* PokemonDetailViewController.swift */; };
+		870E52F528B41B2B00917A83 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 870E52F428B41B2B00917A83 /* SnapKit */; };
 		87A703FE28AFBA1900CF8CD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A703FD28AFBA1900CF8CD6 /* AppDelegate.swift */; };
 		87A7040228AFBA1900CF8CD6 /* PokemonCardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A7040128AFBA1900CF8CD6 /* PokemonCardListViewController.swift */; };
 		87A7040528AFBA1900CF8CD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87A7040328AFBA1900CF8CD6 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87FBEAA228B3920D006E3458 /* SDWebImage in Frameworks */,
+				870E52F528B41B2B00917A83 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +177,7 @@
 			name = PockemonList;
 			packageProductDependencies = (
 				87FBEAA128B3920D006E3458 /* SDWebImage */,
+				870E52F428B41B2B00917A83 /* SnapKit */,
 			);
 			productName = PockemonList;
 			productReference = 87A703FA28AFBA1900CF8CD6 /* PockemonList.app */;
@@ -206,6 +209,7 @@
 			mainGroup = 87A703F128AFBA1900CF8CD6;
 			packageReferences = (
 				87FBEAA028B3920D006E3458 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				870E52F328B41B2B00917A83 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 87A703FB28AFBA1900CF8CD6 /* Products */;
 			projectDirPath = "";
@@ -462,6 +466,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		870E52F328B41B2B00917A83 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		87FBEAA028B3920D006E3458 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -473,6 +485,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		870E52F428B41B2B00917A83 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 870E52F328B41B2B00917A83 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		87FBEAA128B3920D006E3458 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 87FBEAA028B3920D006E3458 /* XCRemoteSwiftPackageReference "SDWebImage" */;
