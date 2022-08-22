@@ -23,6 +23,8 @@ class PokemonDetailViewController: UIViewController {
 
     private func setupUIElement(with model: PokemonCardListModel) -> Void {
         // do stuff
+        
+        view.backgroundColor = .blue
     }
     
 }

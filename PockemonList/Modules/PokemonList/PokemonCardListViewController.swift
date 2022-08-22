@@ -70,7 +70,7 @@ class PokemonCardListViewController: UIViewController {
     // MARK: - Logic
     
     private func handleState(_ state: PokemonListState) -> Void {
-        dump(state)
+//        dump(state)
         switch state {
         case .loading:
             activityIndicatorView.isHidden = false
@@ -78,11 +78,11 @@ class PokemonCardListViewController: UIViewController {
             
         case .list:
             activityIndicatorView.stopAnimating()
-//            favouritesButton.image = UIImage(named: "star")
+            favouritesButton.image = UIImage(systemName: "star")
             
         case .favourites:
             activityIndicatorView.stopAnimating()
-//            favouritesButton.image = UIImage(named: "star.fill")
+            favouritesButton.image = UIImage(systemName: "star.fill")
             
         case .error(let error):
             activityIndicatorView.stopAnimating()
