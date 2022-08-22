@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let vc = PokemonVCFactroy().createPokemonCardVC()
+        let vc = PokemonVCFactroy.shared
+            .createPokemonCardVC()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = vc
@@ -29,14 +30,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 class PokemonVCFactroy {
     
+    static let shared = PokemonVCFactroy()
+    
+    private lazy var networkService = NetworkServiceImpl()
+    private lazy var apiManager = PokemonCardAPIManagerImpl(
+        networkService: networkService
+    )
+    private lazy var provider = PokemonCardProviderImpl(
+        apiManager: apiManager,
+        userDefaults: UserDefaults.standard
+    )
+    
     func createPokemonCardVC() -> UIViewController {
         
-        let networkService = NetworkServiceImpl()
-        let apiManager = PokemonCardAPIManagerImpl(networkService: networkService)
-        let provider = PokemonCardProviderImpl(
-            apiManager: apiManager,
-            userDefaults: UserDefaults.standard
-        )
         
         guard let navController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as? UINavigationController,
               let vc = navController.topViewController as? PokemonCardListViewController else {
@@ -48,4 +54,11 @@ class PokemonVCFactroy {
         return navController
     }
     
+    func createPokemonCardDetailVC(with model: PokemonCardListModel) -> UIViewController {
+        
+        let vc = PokemonDetailViewController(
+            pokemonCardProvider: provider,
+            model: model)
+        return vc
+    }
 }
