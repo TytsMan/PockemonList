@@ -9,7 +9,7 @@ import Foundation
 
 protocol PokemonCardAPIManager {
     func getPokemonCards(
-        with completionHandler: @escaping (Result<[PokemonCard], Error>)->Void
+        completion: @escaping (Result<[PokemonCard], Error>) -> Void
     )
 }
 
@@ -22,7 +22,9 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
     }
     
     enum InternetProtocol: String {
-        case http, https //,ftp
+        case http
+        case https
+        //,ftp
     }
     
     enum EngineVersion: String {
@@ -36,10 +38,23 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
     private static let domain = "api.pokemontcg.io"
     
     func getPokemonCards(
-        with completionHandler: @escaping (Result<[PokemonCard], Error>)->Void
+        completion: @escaping (Result<[PokemonCard], Error>) -> Void
     ) {
+        
         let url = getUrl(endPoint: .cards)
-        fetchItems(url: url, completion: completionHandler)
+        let fetchHandler: (Result<PokemonCardResponce, Error>) -> Void = { result in
+            switch result {
+            case .success(let responce):
+                completion(.success(responce.data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        fetchItems(
+            url: url,
+            completion: fetchHandler
+        )
+        
     }
     
     private func getUrl(
@@ -47,10 +62,13 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
         engineVersion: EngineVersion = .v2,
         endPoint: EndPoint
     ) -> URL {
-        let urlString = internetProtocol.rawValue +
-        PokemonCardAPIManagerImpl.domain +
-        engineVersion.rawValue +
-        endPoint.rawValue
+        let urlString =
+        internetProtocol.rawValue + "://" +
+        PokemonCardAPIManagerImpl.domain + "/" +
+        engineVersion.rawValue + "/" +
+        endPoint.rawValue + "/"
+        //https://api.pokemontcg.io/v2/cards/
+        dump(urlString)
         let url = URL(string: urlString)!
         return url
     }
@@ -63,6 +81,7 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
             .fetchData(url: url) { result in
                 switch result {
                 case .success(let jsonData):
+
                     do {
                         let result = try JSONDecoder().decode(T.self, from: jsonData)
                         completion(.success(result))

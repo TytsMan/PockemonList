@@ -34,24 +34,28 @@ class PokemonCardListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        print(#function)
+        dump(#function)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        dump(#function)
+    }
+    
     // MARK: - Lifecycle
     
     override func prepareForReuse() {
-        print(#function)
+        dump(#function)
     }
     
     // MARK: - Setup
     
     func setupUIElements(with model: PokemonCardListModel) {
         
-        print(#function)
+        dump(#function)
         
         let pockemonImageUrl = URL(string: model.pokemon.images.small)
         pokemonImageView.sd_setImage(with: pockemonImageUrl)

@@ -24,12 +24,12 @@ class PokemonCardListViewController: UIViewController {
     
     // MARK: - Dependencies
     
-    let pokemonCardProvider: PokemonCardProvider! = nil
+    var pokemonCardProvider: PokemonCardProvider! = nil
     
     // MARK: - Properties
     
-    private var state: PokemonListState = .loading {
-        didSet {
+    private var state: PokemonListState = .list([]) {
+        didSet {	
             handleState(state)
         }
     }
@@ -40,7 +40,14 @@ class PokemonCardListViewController: UIViewController {
         super.viewDidLoad()
         
         setupUIElements()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        // do some stuff
+        
+        state = .loading
         pokemonCardProvider.getPokemonCards { [weak self] result in
             switch result {
             case .failure(let error):
@@ -51,22 +58,18 @@ class PokemonCardListViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // do some stuff
-    }
-    
     // MARK: - Setup
     
     private func setupUIElements() {
         
         title = "Pokémon Cards"
+        activityIndicatorView.isHidden = true
     }
     
     // MARK: - Logic
     
     private func handleState(_ state: PokemonListState) -> Void {
+        dump(state)
         switch state {
         case .loading:
             activityIndicatorView.isHidden = false

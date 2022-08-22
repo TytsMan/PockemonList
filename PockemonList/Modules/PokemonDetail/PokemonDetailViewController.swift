@@ -11,7 +11,6 @@ private let reuseIdentifier = "Cell"
 
 class PokemonDetailViewController: UIViewController {
 
-    
     var model: PokemonCardListModel?
     
     override func viewDidLoad() {

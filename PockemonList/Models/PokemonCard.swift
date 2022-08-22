@@ -1,14 +1,12 @@
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
 //
-//  PokemonCard.swift
-//  PockemonList
-//
-//  Created by ivan.dekhtiarov on 19/08/2022.
-//
+//   let pockemonCardResponce = try? newJSONDecoder().decode(PockemonCardResponce.self, from: jsonData)
 
 import Foundation
 
 // MARK: - PockemonCardResponce
-struct PockemonCardResponce: Codable {
+struct PokemonCardResponce: Codable {
     let data: [PokemonCard]
     let page, pageSize, count, totalCount: Int
 }
@@ -89,7 +87,7 @@ struct Cardmarket: Codable {
 }
 
 enum UpdatedAt: String, Codable {
-    case the20220818 = "2022/08/18"
+    case the20220821 = "2022/08/21"
 }
 
 // MARK: - Set

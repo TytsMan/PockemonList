@@ -21,6 +21,6 @@ extension UIViewController {
             completionHandler?()
         }
         alert.addAction(okAction)
-        show(alert, sender: self)
+        showDetailViewController(alert, sender: self)
     }
 }
