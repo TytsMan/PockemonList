@@ -7,11 +7,19 @@
 
 import Foundation
 
-class PokemonCardAPIManager {
+protocol PokemonCardAPIManager {
+    func getPokemonCards(
+        with completionHandler: @escaping (Result<[PokemonCard], Error>)->Void
+    )
+}
+
+class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
     
-    static let shared = PokemonCardAPIManager()
+    private let networkService: NetworkService
     
-    private init() { }
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
     
     enum InternetProtocol: String {
         case http, https //,ftp
@@ -27,18 +35,45 @@ class PokemonCardAPIManager {
     
     private static let domain = "api.pokemontcg.io"
     
-    func getPokemonCards(with completionHandler: @escaping (Result<[PokemonCard], Error>)->Void) {
+    func getPokemonCards(
+        with completionHandler: @escaping (Result<[PokemonCard], Error>)->Void
+    ) {
         let url = getUrl(endPoint: .cards)
-        APIManager.shared.fetchItems(url: url, completion: completionHandler)
+        fetchItems(url: url, completion: completionHandler)
     }
     
-    private func getUrl(for internetProtocol: InternetProtocol = .https, engineVersion: EngineVersion = .v2, endPoint: EndPoint) -> URL {
+    private func getUrl(
+        for internetProtocol: InternetProtocol = .https,
+        engineVersion: EngineVersion = .v2,
+        endPoint: EndPoint
+    ) -> URL {
         let urlString = internetProtocol.rawValue +
-                        PokemonCardAPIManager.domain +
-                        engineVersion.rawValue +
-                        endPoint.rawValue
+        PokemonCardAPIManagerImpl.domain +
+        engineVersion.rawValue +
+        endPoint.rawValue
         let url = URL(string: urlString)!
         return url
+    }
+    
+    private func fetchItems<T: Decodable>(
+        url: URL,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        networkService
+            .fetchData(url: url) { result in
+                switch result {
+                case .success(let jsonData):
+                    do {
+                        let result = try JSONDecoder().decode(T.self, from: jsonData)
+                        completion(.success(result))
+                    } catch(let error) {
+                        completion(.failure(error))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+                
+            }
     }
 }
 
