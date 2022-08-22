@@ -40,12 +40,6 @@ class PokemonCardListViewController: UIViewController {
         super.viewDidLoad()
         
         setupUIElements()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // do some stuff
         
         state = .loading
         pokemonCardProvider.getPokemonCards { [weak self] result in
@@ -56,6 +50,12 @@ class PokemonCardListViewController: UIViewController {
                 self?.state = .list(cards)
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // do some stuff
     }
     
     // MARK: - Setup
@@ -78,11 +78,11 @@ class PokemonCardListViewController: UIViewController {
             
         case .list:
             activityIndicatorView.stopAnimating()
-            favouritesButton.image = UIImage(named: "star")
+//            favouritesButton.image = UIImage(named: "star")
             
         case .favourites:
             activityIndicatorView.stopAnimating()
-            favouritesButton.image = UIImage(named: "star.fill")
+//            favouritesButton.image = UIImage(named: "star.fill")
             
         case .error(let error):
             activityIndicatorView.stopAnimating()
@@ -207,6 +207,8 @@ extension PokemonCardListViewController: UITableViewDataSource {
         }
         let pokemonCardMode = dataSource![indexPath.row]
         cell.setupUIElements(with: pokemonCardMode)
+        cell.favouriteActionHandler = favouriteButtonTapped
+        cell.detailActionHandler = detailButtonTapped
         return cell
     }
 }

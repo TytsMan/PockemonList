@@ -141,7 +141,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="ypQ-ho-4mS">
-                        <barButtonItem key="rightBarButtonItem" image="star" catalog="system" style="plain" id="yzB-hT-tco">
+                        <barButtonItem key="rightBarButtonItem" image="star.fill" catalog="system" style="plain" id="yzB-hT-tco">
                             <connections>
                                 <action selector="favouritesButtonTapped:" destination="BYZ-38-t0r" id="sYb-Ez-zz3"/>
                             </connections>
@@ -179,6 +179,7 @@
     <resources>
         <image name="folder" catalog="system" width="128" height="97"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

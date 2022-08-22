@@ -59,6 +59,8 @@ class PokemonCardListCell: UITableViewCell {
         
         dump(#function)
         
+        self.model = model
+        
         let pockemonImageUrl = URL(string: model.pokemon.images.small)
         pokemonImageView.sd_setImage(with: pockemonImageUrl)
         
@@ -66,13 +68,15 @@ class PokemonCardListCell: UITableViewCell {
         supertypeLabel.text = model.pokemon.supertype.rawValue
         evolvesFromLabel.text = model.pokemon.evolvesFrom
         hpLabel.text = model.pokemon.hp
-        favouriteButton.imageView?.image = model.favorite ? UIImage(named: "star") : UIImage(named: "star.fill")
+        favouriteButton.setImage(
+            model.favorite ? UIImage(named: "star.fill") : UIImage(named: "star"),
+            for: .normal
+        )
     }
     
     // MARK: - Actions
     
     @IBAction func favouriteButtonTapped(_ sender: UIButton) {
-        
         guard let favouriteActionHandler = favouriteActionHandler,
               let model = model else {
             return
