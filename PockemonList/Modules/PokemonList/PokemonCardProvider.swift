@@ -21,7 +21,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
     private let apiManager: PokemonCardAPIManager
     private let userDefaults: UserDefaults
     
-    // MARK: - Dependencies
+    // MARK: - Constants
     
     static let storageFavouritePokemonCardsKey = "favourite_pokemon_cards"
     
@@ -40,10 +40,14 @@ class PokemonCardProviderImpl: PokemonCardProvider {
     func getPokemonCards(
         completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
     ) {
-        apiManager.getPokemonCards { result in
+        apiManager.getPokemonCards { [weak self] result in
+            let favourites = self?.getFauritePokemonCardsFlags() ?? [:]
             let newResult = result.map { cards in
                 cards.map { card in
-                    PokemonCardListModel(pokemon: card, favorite: false)
+                    PokemonCardListModel(
+                        pokemon: card,
+                        favorite: favourites[card.id] ?? false
+                    )
                 }
             }
             completion(newResult)
@@ -57,9 +61,14 @@ class PokemonCardProviderImpl: PokemonCardProvider {
             let favourites = self?.getFauritePokemonCardsFlags() ?? [:]
             let newResult = result.map { cards in
                 cards
-                    .filter { favourites[$0.id] ?? false }
-                    .map { card in
-                        PokemonCardListModel(pokemon: card, favorite: false)
+                    .compactMap { card -> PokemonCardListModel? in
+                        guard favourites[card.id] ?? false else {
+                            return nil
+                        }
+                        return PokemonCardListModel(
+                            pokemon: card,
+                            favorite: true
+                        )
                     }
             }
             completion(newResult)

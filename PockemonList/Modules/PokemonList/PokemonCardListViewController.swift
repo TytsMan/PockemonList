@@ -118,7 +118,7 @@ class PokemonCardListViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func favouritesButtonTapped(
-        _ sender: Any
+        _ sender: UIButton
     ) {
         switch state {
         case .list:
@@ -169,8 +169,8 @@ class PokemonCardListViewController: UIViewController {
     private func detailButtonTapped(
         model: PokemonCardListModel
     ) -> Void {
-        let detailVC = PokemonDetailViewController()
-        detailVC.model = model
+        let detailVC = PokemonVCFactroy.shared
+            .createPokemonCardDetailVC(with: model)
         show(detailVC, sender: self)
     }
     
@@ -200,10 +200,11 @@ extension PokemonCardListViewController: UITableViewDataSource {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonCardListCell.reuseIdentifier) as? PokemonCardListCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PokemonCardListCell.reuseIdentifier) as? PokemonCardListCell,
+              let dataSource = dataSource else {
             return UITableViewCell()
         }
-        let pokemonCardMode = dataSource![indexPath.row]
+        let pokemonCardMode = dataSource[indexPath.row]
         cell.setupUIElements(with: pokemonCardMode)
         cell.favouriteActionHandler = favouriteButtonTapped
         cell.detailActionHandler = detailButtonTapped
