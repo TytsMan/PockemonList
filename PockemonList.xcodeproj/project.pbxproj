@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CDD86FB28B4EDAD007CBF17 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD86FA28B4EDAD007CBF17 /* Storage.swift */; };
 		870E060328B0043800206817 /* PokemonCardAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060228B0043800206817 /* PokemonCardAPIManager.swift */; };
 		870E060528B0078500206817 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060428B0078500206817 /* UIViewController+Alert.swift */; };
 		870E060928B012B100206817 /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060828B012B100206817 /* PokemonDetailViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CDD86FA28B4EDAD007CBF17 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		870E060228B0043800206817 /* PokemonCardAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardAPIManager.swift; sourceTree = "<group>"; };
 		870E060428B0078500206817 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		870E060828B012B100206817 /* PokemonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				87A7041D28AFBEC000CF8CD6 /* Identifiable.swift */,
 				870E060428B0078500206817 /* UIViewController+Alert.swift */,
+				2CDD86FA28B4EDAD007CBF17 /* Storage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				870E060328B0043800206817 /* PokemonCardAPIManager.swift in Sources */,
 				87A7041E28AFBEC000CF8CD6 /* Identifiable.swift in Sources */,
 				87A7041B28AFBE0000CF8CD6 /* PokemonCard.swift in Sources */,
+				2CDD86FB28B4EDAD007CBF17 /* Storage.swift in Sources */,
 				87A7041828AFBC7B00CF8CD6 /* PokemonCardListCell.swift in Sources */,
 				87EEF64D28B021290020E6DE /* PokemonCardProvider.swift in Sources */,
 				87A703FE28AFBA1900CF8CD6 /* AppDelegate.swift in Sources */,
