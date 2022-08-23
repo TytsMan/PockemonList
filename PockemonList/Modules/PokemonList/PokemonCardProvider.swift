@@ -41,12 +41,12 @@ class PokemonCardProviderImpl: PokemonCardProvider {
         completion: @escaping (Result<[PokemonCardListModel], Error>) -> Void
     ) {
         apiManager.getPokemonCards { [weak self] result in
-            let favourites = self?.getFauritePokemonCardsFlags() ?? [:]
+            let favourites = self?.favouritePokemonCardsFlags ?? [:]
             let newResult = result.map { cards in
                 cards.map { card in
                     PokemonCardListModel(
                         pokemon: card,
-                        favorite: favourites[card.id] ?? false
+                        favourite: favourites[card.id] ?? false
                     )
                 }
             }
@@ -67,7 +67,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
                         }
                         return PokemonCardListModel(
                             pokemon: card,
-                            favorite: true
+                            favourite: true
                         )
                     }
             }
@@ -80,7 +80,7 @@ class PokemonCardProviderImpl: PokemonCardProvider {
         completion: @escaping (Result<PokemonCardListModel, Error>) -> Void
     ) {
         var newModel = model
-        newModel.favorite.toggle()
+        newModel.favourite.toggle()
         
         var favourites = getFauritePokemonCardsFlags()
         favourites[model.pokemon.id] = newModel.favorite

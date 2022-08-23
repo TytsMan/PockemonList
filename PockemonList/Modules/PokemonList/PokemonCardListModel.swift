@@ -9,5 +9,5 @@ import Foundation
 
 struct PokemonCardListModel: Codable {
     let pokemon: PokemonCard
-    var favorite: Bool
+    var favourite: Bool
 }

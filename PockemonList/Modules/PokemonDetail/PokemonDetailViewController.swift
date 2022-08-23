@@ -162,7 +162,7 @@ class PokemonDetailViewController: UIViewController {
     }
     
     func updateUI() {
-        favouriteButton.image = model.favorite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        favouriteButton.image = model.favourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     // MARK: - Logic

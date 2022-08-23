@@ -69,7 +69,7 @@ class PokemonCardListCell: UITableViewCell {
         evolvesFromLabel.text = model.pokemon.evolvesFrom
         hpLabel.text = model.pokemon.hp
         favouriteButton.setImage(
-            model.favorite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star"),
+            model.favourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star"),
             for: .normal
         )
     }
