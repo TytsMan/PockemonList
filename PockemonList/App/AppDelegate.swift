@@ -32,7 +32,9 @@ class PokemonVCFactroy {
     
     static let shared = PokemonVCFactroy()
     
-    private lazy var networkService = NetworkServiceImpl()
+    private lazy var networkService = NetworkServiceImpl(
+        urlSession: URLSession.shared
+    )
     private lazy var apiManager = PokemonCardAPIManagerImpl(
         networkService: networkService
     )
