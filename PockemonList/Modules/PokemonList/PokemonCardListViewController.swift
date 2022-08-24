@@ -75,10 +75,12 @@ class PokemonCardListViewController: UIViewController {
         case .list:
             activityIndicatorView.stopAnimating()
             favouritesButton.image = UIImage(systemName: "star")
+            isFavouriteList = false
             
         case .favourites:
             activityIndicatorView.stopAnimating()
             favouritesButton.image = UIImage(systemName: "star.fill")
+            isFavouriteList = true
             
         case .error(let error):
             activityIndicatorView.stopAnimating()
