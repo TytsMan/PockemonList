@@ -56,8 +56,11 @@ class PokemonDetailView: UIView {
         backgroundColor = .white
         
         addSubview(scrollView)
+        
+        scrollView.addSubview(coverView)
+        
         scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(coverView)
+        //        stackView.addArrangedSubview(coverView)
         
         let parameters = [
             "Supertype: \(model.pokemon.supertype.rawValue)",
@@ -76,6 +79,8 @@ class PokemonDetailView: UIView {
         
         parameterLabels = parameters.map(createLabel)
         parameterLabels.forEach { stackView.addArrangedSubview($0) }
+        parameterLabels[0].removeFromSuperview()
+        scrollView.addSubview(parameterLabels[0])
         
         let pockemonImageUrl = URL(string: model.pokemon.images.small)
         coverView.sd_setImage(with: pockemonImageUrl)
@@ -88,12 +93,31 @@ class PokemonDetailView: UIView {
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
         }
-
+        
         stackView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
+//            make.top.equalTo(parameterLabels[0].snp.bottom)
+            make.bottom.equalToSuperview()
             make.centerX.equalToSuperview()
             make.width.equalToSuperview()
         }
+        
+        coverView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            coverView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            coverView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10),
+            coverView.bottomAnchor.constraint(equalTo: parameterLabels[0].topAnchor, constant: -10),
+            coverView.leadingAnchor.constraint(greaterThanOrEqualTo: scrollView.leadingAnchor),
+            coverView.trailingAnchor.constraint(lessThanOrEqualTo: scrollView.trailingAnchor),
+        ])
+        
+        parameterLabels[0].translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            parameterLabels[0].centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            parameterLabels[0].topAnchor.constraint(equalTo: coverView.bottomAnchor, constant: 10),
+            parameterLabels[0].bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: -10),
+            parameterLabels[0].leadingAnchor.constraint(greaterThanOrEqualTo: scrollView.leadingAnchor),
+            parameterLabels[0].trailingAnchor.constraint(lessThanOrEqualTo: scrollView.trailingAnchor)
+        ])
     }
 }
 
