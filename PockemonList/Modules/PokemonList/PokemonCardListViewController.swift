@@ -34,14 +34,16 @@ class PokemonCardListViewController: UIViewController {
         }
     }
     
+    @Storage(key: "isFavouriteList", defaultValue: false)
+    private var isFavouriteList: Bool
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUIElements()
-        
-        requestPokemonCardsFor(destinationState: .list())
+        restoreLastState()
     }
     
     // MARK: - Setup
@@ -54,6 +56,12 @@ class PokemonCardListViewController: UIViewController {
     }
     
     // MARK: - Logic
+    
+    private func restoreLastState() {
+        
+        let destinationState: State = isFavouriteList ? .favourites() : .list()
+        requestPokemonCardsFor(destinationState: destinationState)
+    }
     
     private func handleState(
         _ state: State

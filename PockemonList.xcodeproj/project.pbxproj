@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2CDD86FB28B4EDAD007CBF17 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD86FA28B4EDAD007CBF17 /* Storage.swift */; };
+		2CDD86FD28B62893007CBF17 /* PokemonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDD86FC28B62893007CBF17 /* PokemonDetailView.swift */; };
 		870E060328B0043800206817 /* PokemonCardAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060228B0043800206817 /* PokemonCardAPIManager.swift */; };
 		870E060528B0078500206817 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060428B0078500206817 /* UIViewController+Alert.swift */; };
 		870E060928B012B100206817 /* PokemonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870E060828B012B100206817 /* PokemonDetailViewController.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		2CDD86FA28B4EDAD007CBF17 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		2CDD86FC28B62893007CBF17 /* PokemonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailView.swift; sourceTree = "<group>"; };
 		870E060228B0043800206817 /* PokemonCardAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCardAPIManager.swift; sourceTree = "<group>"; };
 		870E060428B0078500206817 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		870E060828B012B100206817 /* PokemonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				870E060828B012B100206817 /* PokemonDetailViewController.swift */,
+				2CDD86FC28B62893007CBF17 /* PokemonDetailView.swift */,
 			);
 			path = PokemonDetail;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CDD86FD28B62893007CBF17 /* PokemonDetailView.swift in Sources */,
 				87EEF64F28B022370020E6DE /* PokemonCardListModel.swift in Sources */,
 				87A7040228AFBA1900CF8CD6 /* PokemonCardListViewController.swift in Sources */,
 				870E060328B0043800206817 /* PokemonCardAPIManager.swift in Sources */,

@@ -29,40 +29,7 @@ class PokemonDetailViewController: UIViewController {
         return button
     }()
     
-    let scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.isScrollEnabled = true
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        return scrollView
-    }()
-    
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.alignment = .center
-        return stackView
-    }()
-    
-    let coverView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    private lazy var supertypeLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var levelLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var hpLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var evolvesFromLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var evolvesToLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var abilitiesLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var attacksLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var weaknessesLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var resistancesLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var rarityLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var artistLabel: UILabel = { [unowned self] in createLabel() }()
-    private lazy var descriptionLabel: UILabel = { [unowned self] in createLabel() }()
+    private lazy var contentView: PokemonDetailView = PokemonDetailView(model: model)
     
     // MARK: - Initiaziler
     
@@ -82,83 +49,24 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    override func loadView() {
+        view = contentView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUIElement(with: model)
-        setupConstrains()
         updateUI()
     }
     
     // MARK: - Setup
     
     private func setupUIElement(with model: PokemonCardListModel) -> Void {
-        // do stuff
-        
-        view.backgroundColor = .white
-        
         title = model.pokemon.name
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = favouriteButton
-        
-        view.addSubview(scrollView)
-        scrollView.addSubview(stackView)
-        let stackViews: [UIView] = [
-            coverView,
-            supertypeLabel,
-            levelLabel,
-            hpLabel,
-            evolvesFromLabel,
-            evolvesToLabel,
-            abilitiesLabel,
-            attacksLabel,
-            weaknessesLabel,
-            resistancesLabel,
-            rarityLabel,
-            artistLabel,
-            descriptionLabel
-        ]
-        stackViews.forEach { stackView.addArrangedSubview($0) }
-        
-        let pockemonImageUrl = URL(string: model.pokemon.images.small)
-        coverView.sd_setImage(with: pockemonImageUrl)
-        
-        supertypeLabel.text = "Supertype: \(model.pokemon.supertype.rawValue)"
-        levelLabel.text = "Level: \(model.pokemon.level ?? "??")"
-        hpLabel.text = "HP: \(model.pokemon.hp)"
-        evolvesFromLabel.text = "Evolves from: \(model.pokemon.evolvesFrom ?? "??")"
-        evolvesToLabel.text = "Evolves to: \(model.pokemon.evolvesTo?.joined(separator: ", ") ?? "??")"
-        abilitiesLabel.text = "Abilities: \(model.pokemon.abilities?.map { $0.name }.joined(separator: ", ") ?? "??")"
-        attacksLabel.text = "Attacks: \(model.pokemon.attacks?.map { $0.name }.joined(separator: ", ") ?? "??")"
-        weaknessesLabel.text = "Weaknesses: \(model.pokemon.weaknesses?.map { $0.type.rawValue }.joined(separator: ", ") ?? "??")"
-        resistancesLabel.text = "Resistances: \(model.pokemon.resistances?.map { $0.type.rawValue }.joined(separator: ", ") ?? "??")"
-        rarityLabel.text = "Level: \(model.pokemon.rarity?.rawValue ?? "??")"
-        artistLabel.text = "Level: \(model.pokemon.artist)"
-        descriptionLabel.text = "Level: \(model.pokemon.flavorText ?? "??")"
-    }
-    
-    func setupConstrains() {
-        scrollView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-        }
-
-        stackView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-        }
-    }
-    
-    private func createLabel() -> UILabel {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 18)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        return label
     }
     
     func updateUI() {
@@ -185,5 +93,4 @@ class PokemonDetailViewController: UIViewController {
     func favouritesButtonTapped() {
         toggleFavouriteFlag()
     }
-    
 }
