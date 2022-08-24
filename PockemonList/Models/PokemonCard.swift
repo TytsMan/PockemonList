@@ -82,7 +82,7 @@ enum RetreatCost: String, Codable {
 // MARK: - Cardmarket
 struct Cardmarket: Codable {
     let url: String
-    let updatedAt: UpdatedAt
+    let updatedAt: String
     let prices: [String: Double]
 }
 
@@ -176,7 +176,7 @@ enum Supertype: String, Codable {
 // MARK: - Tcgplayer
 struct Tcgplayer: Codable {
     let url: String
-    let updatedAt: UpdatedAt
+    let updatedAt: String
     let prices: Prices
 }
 
