@@ -20,7 +20,7 @@ class PokemonDetailViewController: UIViewController {
     
     // MARK: - UI Elements
     
-    lazy var favouriteButton: UIBarButtonItem = {
+    private lazy var favouriteButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
             image: UIImage(systemName: "star"),
             style: .plain,
@@ -69,13 +69,13 @@ class PokemonDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = favouriteButton
     }
     
-    func updateUI() {
+    private func updateUI() {
         favouriteButton.image = model.favourite ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     // MARK: - Logic
     
-    func toggleFavouriteFlag() {
+    private func toggleFavouriteFlag() {
         pokemonCardProvider.setFaouritePokemonCard(model: model) { [weak self] result in
             switch result {
             case .success(let model):

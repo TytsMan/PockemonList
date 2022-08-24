@@ -33,7 +33,7 @@ class PokemonDetailView: UIView {
         return imageView
     }()
     
-    var parameterLabels: [UILabel] = []
+    private(set) var parameterLabels: [UILabel] = []
     
     // MARK: - Initiaziler
     
@@ -59,7 +59,7 @@ class PokemonDetailView: UIView {
         scrollView.addSubview(stackView)
         stackView.addArrangedSubview(coverView)
         
-        let parameterLabels = [
+        let parameters = [
             "Supertype: \(model.pokemon.supertype.rawValue)",
             "Level: \(model.pokemon.level ?? "??")",
             "HP: \(model.pokemon.hp)",
@@ -72,15 +72,16 @@ class PokemonDetailView: UIView {
             "Level: \(model.pokemon.rarity?.rawValue ?? "??")",
             "Level: \(model.pokemon.artist)",
             "Level: \(model.pokemon.flavorText ?? "??")"
-        ].map(createLabel)
+        ]
         
+        parameterLabels = parameters.map(createLabel)
         parameterLabels.forEach { stackView.addArrangedSubview($0) }
         
         let pockemonImageUrl = URL(string: model.pokemon.images.small)
         coverView.sd_setImage(with: pockemonImageUrl)
     }
     
-    func setupConstrains() {
+    private func setupConstrains() {
         
         scrollView.snp.makeConstraints { make in
             make.verticalEdges.equalToSuperview()
@@ -100,7 +101,7 @@ class PokemonDetailView: UIView {
 
 fileprivate extension PokemonDetailView {
     
-    private func createLabel(_ text: String) -> UILabel {
+    func createLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
         label.font = .systemFont(ofSize: 18)
