@@ -179,7 +179,7 @@ class PokemonCardListViewController: UIViewController {
     private func detailButtonTapped(
         model: PokemonCardListModel
     ) -> Void {
-        let detailVC = PokemonVCFactroy.shared
+        let detailVC = PokemonVCFactory.shared
             .createPokemonCardDetailVC(with: model)
         show(detailVC, sender: self)
     }

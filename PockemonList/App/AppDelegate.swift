@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let vc = PokemonVCFactroy.shared
+        let vc = PokemonVCFactory.shared
             .createPokemonCardVC()
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -28,9 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-class PokemonVCFactroy {
+class PokemonVCFactory {
     
-    static let shared = PokemonVCFactroy()
+    static let shared = PokemonVCFactory()
     
     private lazy var networkService = NetworkServiceImpl(
         urlSession: URLSession.shared
