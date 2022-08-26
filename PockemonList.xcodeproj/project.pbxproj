@@ -61,33 +61,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		870E060128B0042800206817 /* Networking */ = {
+		2CFAD19E28B8F14100F0BAA4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				87FBEA9E28B38EE6006E3458 /* NetworkService.swift */,
+				87A7041D28AFBEC000CF8CD6 /* Identifiable.swift */,
+				2CDD86FA28B4EDAD007CBF17 /* Storage.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		870E060128B0042800206817 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
 				870E060228B0043800206817 /* PokemonCardAPIManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		870E060A28B018F600206817 /* PokemonList */ = {
+		870E060A28B018F600206817 /* PokemonListFlow */ = {
 			isa = PBXGroup;
 			children = (
+				870E060B28B0190800206817 /* PokemonDetailFlow */,
 				87EEF64E28B022370020E6DE /* PokemonCardListModel.swift */,
 				87EEF64C28B021290020E6DE /* PokemonCardProvider.swift */,
 				87A7040128AFBA1900CF8CD6 /* PokemonCardListViewController.swift */,
 				87A7041728AFBC7B00CF8CD6 /* PokemonCardListCell.swift */,
 			);
-			path = PokemonList;
+			path = PokemonListFlow;
 			sourceTree = "<group>";
 		};
-		870E060B28B0190800206817 /* PokemonDetail */ = {
+		870E060B28B0190800206817 /* PokemonDetailFlow */ = {
 			isa = PBXGroup;
 			children = (
 				870E060828B012B100206817 /* PokemonDetailViewController.swift */,
 				2CDD86FC28B62893007CBF17 /* PokemonDetailView.swift */,
 			);
-			path = PokemonDetail;
+			path = PokemonDetailFlow;
 			sourceTree = "<group>";
 		};
 		87A703F128AFBA1900CF8CD6 = {
@@ -110,9 +120,10 @@
 			isa = PBXGroup;
 			children = (
 				87A7041128AFBA4300CF8CD6 /* App */,
-				87A7041328AFBA8500CF8CD6 /* Modules */,
+				87A7041328AFBA8500CF8CD6 /* Flows */,
 				87A7041928AFBDD600CF8CD6 /* Models */,
 				870E060128B0042800206817 /* Networking */,
+				2CFAD19E28B8F14100F0BAA4 /* Helpers */,
 				87A7041C28AFBE8C00CF8CD6 /* Extensions */,
 				87A7041228AFBA6A00CF8CD6 /* Resources */,
 				87A7040B28AFBA1D00CF8CD6 /* Info.plist */,
@@ -137,14 +148,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		87A7041328AFBA8500CF8CD6 /* Modules */ = {
+		87A7041328AFBA8500CF8CD6 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				870E060A28B018F600206817 /* PokemonList */,
-				870E060B28B0190800206817 /* PokemonDetail */,
+				870E060A28B018F600206817 /* PokemonListFlow */,
 				87A7040328AFBA1900CF8CD6 /* Main.storyboard */,
 			);
-			path = Modules;
+			path = Flows;
 			sourceTree = "<group>";
 		};
 		87A7041928AFBDD600CF8CD6 /* Models */ = {
@@ -158,9 +168,7 @@
 		87A7041C28AFBE8C00CF8CD6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				87A7041D28AFBEC000CF8CD6 /* Identifiable.swift */,
 				870E060428B0078500206817 /* UIViewController+Alert.swift */,
-				2CDD86FA28B4EDAD007CBF17 /* Storage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
