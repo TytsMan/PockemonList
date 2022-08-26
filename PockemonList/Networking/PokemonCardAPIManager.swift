@@ -50,7 +50,7 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
                 completion(.failure(error))
             }
         }
-        fetchItems(
+        networkService.fetchItems(
             url: url,
             completion: fetchHandler
         )
@@ -71,28 +71,6 @@ class PokemonCardAPIManagerImpl: PokemonCardAPIManager {
         dump(urlString)
         let url = URL(string: urlString)!
         return url
-    }
-    
-    private func fetchItems<T: Decodable>(
-        url: URL,
-        completion: @escaping (Result<T, Error>) -> Void
-    ) {
-        networkService
-            .fetchData(url: url) { result in
-                switch result {
-                case .success(let jsonData):
-
-                    do {
-                        let result = try JSONDecoder().decode(T.self, from: jsonData)
-                        completion(.success(result))
-                    } catch(let error) {
-                        completion(.failure(error))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-                
-            }
     }
 }
 

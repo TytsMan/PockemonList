@@ -12,10 +12,17 @@ enum NetworkError: Error {
 }
 
 protocol NetworkService {
+    
     func fetchData(
         url: URL,
         completion: @escaping (Result<Data, Error>) -> Void
     )
+    
+    func fetchItems<T: Decodable>(
+        url: URL,
+        completion: @escaping (Result<T, Error>) -> Void
+    )
+    
 }
 
 class NetworkServiceImpl: NetworkService {
@@ -56,6 +63,27 @@ class NetworkServiceImpl: NetworkService {
         }
         
         dataTask?.resume()
+    }
+    
+    func fetchItems<T: Decodable>(
+        url: URL,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        fetchData(url: url) { result in
+            switch result {
+            case .success(let jsonData):
+                
+                do {
+                    let result = try JSONDecoder().decode(T.self, from: jsonData)
+                    completion(.success(result))
+                } catch(let error) {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+            
+        }
     }
     
 }
